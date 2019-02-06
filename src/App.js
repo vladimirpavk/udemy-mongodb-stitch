@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
+import { Stitch } from 'mongodb-stitch-browser-sdk';
+
 import Header from './components/Header/Header';
 import Modal from './components/Modal/Modal';
 import Backdrop from './components/Backdrop/Backdrop';
@@ -13,10 +15,16 @@ import ConfirmAccountPage from './pages/Auth/ConfirmAccount';
 
 class App extends Component {
   state = {
-    isAuth: false,
+    isAuth: true,
     authMode: 'login',
-    error: null
+    error: null,
+    stitchClient: null
   };
+
+  constructor(){
+    super();
+    this.state.stitchClient = Stitch.initializeDefaultAppClient('myApp');
+  }
 
   logoutHandler = () => {
     this.setState({ isAuth: false });
